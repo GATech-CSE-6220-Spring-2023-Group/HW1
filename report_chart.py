@@ -10,8 +10,8 @@ Usage example:
     $ python report_chart -n=1000 2 3 4
 """
 parser = argparse.ArgumentParser(description='Process some integers.')
-parser.add_argument('p', metavar='p', type=int, nargs='+',
-    help='Number of parallel processes to use to compute the integral estimate')
+parser.add_argument('-p', type=int, default=10,
+    help='Specify the max numper of processors, and test all num_processors in [1,p]')
 parser.add_argument('-n', type=int, default=10**6,
     help='Total number of sum terms used to estimate the integral')
 parser.add_argument('-o', type=str, required=False,
@@ -32,8 +32,11 @@ def execute(n=1000, p=4):
     return tuple(float(value.strip()) for value in s_t)
 
 args = parser.parse_args()
-P_I = [(p_i, execute(args.n, p_i)[-1]) for p_i in args.p] # List of tuples `[(p1, t1), (p2, t2), ...]`
 
+ps = range(1, args.p + 1)
+P_I = [(p_i, execute(args.n, p_i)[-1]) for p_i in ps] # List of tuples `[(p1, t1), (p2, t2), ...]`
+
+print(P_I)
 plt.plot([p_i[0] for p_i in P_I], [p_i[1] for p_i in P_I], '--bo')
 plt.title('Execution time for integral estimation using $n$ terms\n$n={:,}$'.format(args.n))
 plt.xlabel('Number of processors')
