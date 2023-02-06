@@ -1,6 +1,7 @@
 import subprocess
 import argparse
 import matplotlib.pyplot as plt
+import ast
 
 """
 Usage example:
@@ -14,6 +15,8 @@ parser.add_argument('-p', type=int, default=10,
     help='Specify the max numper of processors, and test all num_processors in [1,p]')
 parser.add_argument('-n', type=int, default=10**6,
     help='Total number of sum terms used to estimate the integral')
+parser.add_argument('-i', type=str, default="",
+    help='Chart input string, with same format as this script\'s stdout. Instead of running locally, chart the output of another run. E.g "[(1, 0.4), (2, 0.2), (3, 0.1), (4, 0.3305)]"')
 parser.add_argument('-o', type=str, required=False,
     help='Output chart file name (including extension). If no output file name is provided, the chart is shown but not saved.')
 
@@ -34,7 +37,7 @@ def execute(n=1000, p=4):
 args = parser.parse_args()
 
 ps = range(1, args.p + 1)
-P_I = [(p_i, execute(args.n, p_i)[-1]) for p_i in ps] # List of tuples `[(p1, t1), (p2, t2), ...]`
+P_I = ast.literal_eval(args.i) if args.i else [(p_i, execute(args.n, p_i)[-1]) for p_i in ps] # List of tuples `[(p1, t1), (p2, t2), ...]`
 
 print(P_I)
 plt.plot([p_i[0] for p_i in P_I], [p_i[1] for p_i in P_I], '--bo')
