@@ -44,6 +44,8 @@ Example: Create a report chart with $n=1M$, comparing $p=[1,2,...10]$, and save 
 $ python report_chart.py -p=10 -n 1000000 -o report_chart_n_1M.jpg
 ```
 
+_(Note: This run was on a 2021 MacBook Pro using all of its 10 CPU cores. Eight are "performance" cores, and two are "efficiency" cores, so the dip for $p=[9,10]$ is likely due to incorporating the two efficiency cores.)_
+
 ![](report_chart_n_1M.jpg)
 
 Example: Same as above, but with n=1B:
