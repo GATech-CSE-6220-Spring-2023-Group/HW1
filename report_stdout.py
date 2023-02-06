@@ -1,16 +1,9 @@
 import subprocess
 import argparse
 
-"""
-Usage example:
-    # Create a report chart with the default n=10^6, comparing p=1, p=2, p=4, and p=8:
-    $ python report_chart 1 2 4 8
-    # Create a report chart with n=1k, comparing p=2, p=3, and p=4:
-    $ python report_chart -n=1000 2 3 4
-"""
 parser = argparse.ArgumentParser(description='Process some integers.')
 parser.add_argument('-p', type=int, default=10,
-    help='Specify the max numper of processors, and test all num_processors in [1,p]')
+    help='Specify the max numper of processors, and test all num_processors in [1:p]')
 parser.add_argument('-n', type=int, default=10**6,
     help='Total number of sum terms used to estimate the integral')
 
